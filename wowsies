@@ -1,0 +1,87 @@
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner deal = new Scanner(System.in);
+
+        System.out.println("~~~~~~~~~~~~~~~~~~~~ Account Log In ~~~~~~~~~~~~~~~~~~~~");
+        System.out.println("Log in Account");
+        System.out.println("Email (to create a new account, type 'new'): ");
+        String logIn = deal.nextLine();
+        while (!logIn.equalsIgnoreCase("new")
+                && !logIn.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+            System.out.println("\nInvalid email. Please enter an address like name@gmail.com or name@example.com.");
+            System.out.print("Email: ");
+            logIn = deal.nextLine();
+        }
+
+        String signUp = "";
+        String newPassword = "";
+        String repeatPassword = "";
+        String loggingIn = "";
+        String oldPassword = "";
+        String wrongPassword = "";
+        String oldLoggingIn = "";
+        String forgotPassword = "";
+        String forgotLogIn = "";
+        String username = "";
+        String displayName = "";
+        String gender = "";
+
+        if (logIn.equalsIgnoreCase("new")) {              //creation of new account
+          System.out.println("\n~~~~~~~~~~~~~~~~~~~~ Account Set Up ~~~~~~~~~~~~~~~~~~~~");
+          System.out.print("Enter email: ");
+          signUp = deal.nextLine();
+          while (!signUp.matches("[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}")) {
+            System.out.println("\nInvalid email. Please enter an address like name@gmail.com or name@example.com.");
+            System.out.print("Enter email: ");
+            signUp = deal.nextLine();
+          }
+
+          System.out.print("Create a Password: ");
+          newPassword = deal.nextLine();
+          System.out.print("Repeat Password: ");
+          repeatPassword = deal.nextLine();
+
+          while (!newPassword.equals(repeatPassword)) {
+            System.out.println("\nPasswords do not match. Try again.");
+            System.out.print("Repeat Password: ");
+            repeatPassword = deal.nextLine();
+          }
+
+          System.out.println("\nPasswords match, Logging you in...");
+          loggingIn = deal.nextLine();
+          System.out.println("Account Logged In.");
+        } 
+        
+          else {                                               //account log in (old account)
+          System.out.println("Enter Password: ");
+          oldPassword = deal.nextLine();
+
+          while (!oldPassword.equals("ThIs_IS_yOur_PassW0Rd")) {         
+            if (oldPassword.equalsIgnoreCase("forgot")) {                 //forgot password
+              System.out.println("\nYour Password is: ThIs_IS_yOur_PassW0Rd");
+              System.out.print("Input password: ");
+            } else {                                                           //incorrect password
+              System.out.println("\nPassword incorrect. Try again, or type 'forgot': ");
+              System.out.print("Re-enter Password: ");
+            }
+            oldPassword = deal.nextLine();
+          }
+
+          System.out.println("\nLogging in to your Account...");
+          forgotLogIn = deal.nextLine();
+          System.out.println("Successfully Logged In."); 
+        }
+
+        System.out.println("\n~~~~~~~~~~~~~~~~~~~~ Personal Info ~~~~~~~~~~~~~~~~~~~~");
+        System.out.print("Enter Username: ");
+        username = deal.nextLine();
+        System.out.print("Enter Display Name: ");
+        displayName = deal.nextLine();
+        System.out.print("Enter Gender: ");
+        gender = deal.nextLine();
+
+        System.out.println("\nHello " + username + ", glad to see you!");
+    }
+}
