@@ -1,0 +1,166 @@
+# import java.util.Scanner;
+
+public class SchoolPayment {
+    public static void main(String[] args) {
+      Scanner input = new Scanner(System.in);
+
+      System.out.print("Enter name: ");
+      String name = input.nextLine();
+
+      System.out.print("Enter grade and section: ");
+      String sec = input.nextLine();
+
+      System.out.print("Enter Pending Tuition Amount (if none, put 0): ");
+      double tuiamnt = 0.0;
+      try {
+        tuiamnt = input.nextDouble();
+        input.nextLine();
+      } catch (Exception e) {
+        System.out.println("Invalid tuition amount. Using PHP 50000.00.");
+        tuiamnt = 50000.00;
+        input.nextLine();
+      }
+
+      String ins = "";
+      String wheninspay = "";
+      String whenfpay = "";
+      String paid = "";
+      String insfpay = "";
+      double inspay = 0.0;
+      double insday = 0.0;
+      double tuipay = 0.0;
+      double insdpay = 0.0;
+      double tuiremain = 0.0;
+
+      if (tuiamnt == 0.0) {
+        System.out.println("You may leave :>");     //tuitiom amnt = 0
+      }
+      
+      else {                                       //tuition amnt > 0
+        System.out.print("Paid? yes or no: ");
+        paid = input.nextLine();
+
+        if (paid.equalsIgnoreCase("no")) {                 // 
+          System.out.print("\nInstallment? (not full payment) Yes or no: ");
+          ins = input.nextLine();
+
+          if (ins.contains("yes")) {
+            System.out.println("\nInstallment Plan");
+            System.out.print("\nWithin how many days? (if years, months, or weeks, put actual days per year, month, or week e.g. 30): ");
+            insday = input.nextDouble();
+            input.nextLine();
+
+            System.out.print("How much per payment? ");
+            inspay = input.nextDouble(); input.nextLine();
+
+            System.out.print("Payment frequency (e.g. PHP" + inspay + " every " + (insday >= 7 ? insday-7 : insday) +" days within " + insday + " days): ");
+            insfpay = input.nextLine();
+
+            System.out.print("When start? ");
+            wheninspay = input.nextLine();
+          
+            if (wheninspay.contains("Today")) { 
+              System.out.print("Please insert down payment: ");
+              insdpay = input.nextDouble();
+            }
+          
+            else {
+            System.out.print("\nPlease proceed.");
+            }
+          }
+
+          else if (paid.contains("no")) {
+            System.out.print("When is full payment? ");
+            whenfpay = input.nextLine();
+
+            if (whenfpay.contains("today")) {
+              System.out.print("Please insert payment: ");
+              tuipay = input.nextDouble();
+              System.out.println("\nPlease Proceed");
+            }
+          
+            else {
+              System.out.println("Please pay within the set date.");
+            }
+          }
+        }
+
+        else if (paid.equalsIgnoreCase("yes")) {
+          System.out.println("\npayment not needed");
+          tuipay = tuiamnt;
+        }
+
+        else {
+          System.out.println("\nDidn't answer yes or no, automatically added PHP500 to balance.");
+        }
+      }
+
+    if (insdpay > 0) {
+      tuiremain = tuiamnt - insdpay;
+    }
+
+    if (tuipay > 0) {
+      tuiremain = tuiamnt - tuipay;
+    }
+
+    if (paid.equalsIgnoreCase("yes")) {
+      tuiremain = tuiamnt - tuipay;
+    } else if (paid.equalsIgnoreCase("no")) {
+      if (tuipay > 0) {
+        // Full payment made today.
+        tuiremain = tuiamnt - tuipay;
+      } else if (insdpay > 0) {
+        // Installment down payment made today.
+        tuiremain = tuiamnt - insdpay;
+      } else {
+        // No payment has been made yet.
+        tuiremain = tuiamnt;
+      }
+    } else if (!paid.isEmpty()) {
+      tuiamnt += 500;
+      tuiremain = tuiamnt;
+    }
+
+    System.out.println("\n\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+    System.out.println("Tuition Summary");
+    System.out.println("\nStudent's Name: " + name);
+    System.out.println("Grade and Section: " + sec);
+
+    if (paid.equalsIgnoreCase("yes")) {
+      System.out.printf("Tuition Amount Paid: PHP%,.2f%n", tuiamnt);                                       //paid tuition
+    } else if (tuipay > 0 || insdpay > 0) {
+        System.out.printf("Pending Tuition: PHP%,.2f%n", tuiamnt);
+        System.out.printf("Remaining Tuition (Deducted by Payment): PHP%,.2f%n", tuiremain);
+    } else {
+        System.out.printf("Not Paid Tuition Amount: PHP%,.2f%n", tuiamnt);                             //not installment
+        System.out.printf("Remaining Tuition Amount: PHP%,.2f%n", tuiremain);
+    } 
+
+    if (!whenfpay.isEmpty()) {
+      System.out.println("Payment Date: " + whenfpay);
+    }
+
+    if (insday > 0) {
+      System.out.println("Payment Length: " + insday + " days");
+      System.out.println("Payment Start: " + wheninspay);
+    }
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+      System.out.println("\nyou're welcome!");
+    System.out.println("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+      input.close();
+    }
+} 
